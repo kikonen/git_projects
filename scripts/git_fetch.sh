@@ -16,7 +16,7 @@ echo "$PROJECTS" | tr ' ' '\n' | while read PROJECT; do
         echo "FETCH: $PROJECT (BRANCH: $BRANCH)"
 
         (cd $PROJECT_DIR && git fetch "$@")
-        (cd $PROJECT_DIR && git --no-pager log -2)
+        (cd $PROJECT_DIR && git --no-pager log -1)
     fi
 done
 

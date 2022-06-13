@@ -2,4 +2,5 @@ projects/*
 !projects/.keep
 
 .env*
+.emacs*
 repositories.txt
