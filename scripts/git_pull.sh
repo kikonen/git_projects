@@ -15,7 +15,7 @@ echo "$PROJECTS" | tr ' ' '\n' | while read PROJECT; do
         echo "----------------------------------------"
         echo "PULL: $PROJECT (BRANCH: $BRANCH)"
 
-        (cd $PROJECT_DIR && git pull "$@")
+        (cd $PROJECT_DIR && git pull --tags --force "$@")
         (cd $PROJECT_DIR && git --no-pager log -1)
     fi
 done
