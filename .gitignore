@@ -4,5 +4,5 @@ projects/*
 .env*
 .emacs*
 repositories.txt
+ignore.txt
 obsolete
-

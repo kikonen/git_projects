@@ -3,19 +3,30 @@
 export DOCKER_ENV=base
 . $(realpath $(dirname $0))/base_env.sh
 
-PROJECTS=$(cat $ROOT_DIR/repositories.txt)
-echo "CLONE PROJECTS: $PROJECTS"
+IGNORE=$(cat $ROOT_DIR/ignore.txt | sort)
+#PROJECTS=$(cat $ROOT_DIR/repositories.txt | sort)
 
-echo "$PROJECTS" | tr ' ' '\n' | while read PROJECT; do
-    PROJECT_DIR="${PROJECTS_DIR}/${PROJECT}"
-    SERVICE_DIR="${ROOT_DIR}/${PROJECT}-service"
+PROJECTS=$(comm -3 <(cat $ROOT_DIR/repositories.txt | sort) <(cat $ROOT_DIR/ignore.txt | sort))
+
+
+echo "---------------------------"
+echo "IGNORE PROJECTS:"
+echo "$IGNORE"
+echo "---------------------------"
+echo "CLONE PROJECTS:"
+echo "$PROJECTS"
+echo "---------------------------"
+
+echo "$PROJECTS" | tr ' ' '\n' | while read PROJECT_NAME; do
+    PROJECT_PATH=$(echo $PROJECT_NAME | awk '{ gsub(".*/", "") ; print $0 }')
+    PROJECT_DIR="${PROJECTS_DIR}/${PROJECT_PATH}"
 
     if [[ ! -d $PROJECT_DIR ]]; then
-        echo "CLONE: $PROJECT"
-        PROJECT_URL="git@github.com:${PROJECT}.git"
+        echo "CLONE: $PROJECT_NAME"
+        PROJECT_URL="git@github.com:${PROJECT_NAME}.git"
         $(cd $PROJECTS_DIR && git clone $PROJECT_URL)
     else
-        echo "EXIST: $PROJECT"
+        echo "EXIST: $PROJECT_PATH"
     fi
 done
 
