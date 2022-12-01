@@ -2,7 +2,7 @@
 
 ## Setup
 ```bash
-gh repo list [ORGANIZATION] -L 1000 | awk ' { print $1 }' > repositories.txt
+gh repo list [ORGANIZATION] -L 1000 | awk ' { print $1 }' | sort > repositories.txt
 ```
 
 ## Usage
